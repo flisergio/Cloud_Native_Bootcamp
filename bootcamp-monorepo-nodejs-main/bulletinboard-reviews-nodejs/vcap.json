@@ -1,0 +1,17 @@
+{
+  "application": {
+    "port": 9090
+  },
+  "services": {
+    "bulletinboard-postgres": [
+      {
+        "name": "bulletinboard-postgres",
+        "credentials": {
+          "uri": "postgresql://postgres:postgres@localhost:6543/postgres",
+          "sslcert": null,
+          "sslrootcert": null
+        }
+      }
+    ]
+  }
+}

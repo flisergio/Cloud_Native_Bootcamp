@@ -1,0 +1,10 @@
+---
+applications:
+  - name: bulletinboard-reviews
+    memory: 128MB
+    command: npm start
+    random-route: true
+    buildpacks:
+      - https://github.com/cloudfoundry/nodejs-buildpack
+    services:
+      - bulletinboard-postgres

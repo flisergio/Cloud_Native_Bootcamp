@@ -1,0 +1,11 @@
+applications:
+  - name: bulletinboard-ads
+    memory: 128MB
+    command: npm start
+    random-route: true
+    buildpacks:
+      - https://github.com/cloudfoundry/nodejs-buildpack
+    services:
+      - bulletinboard-postgres
+    env:
+      REVIEWS_ENDPOINT: "<todo://set.bulletinboard-reviews.endpoint.here/>"

@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: bulletinboard-reviews-db-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bulletinboard-reviews-db
+spec:
+  selector:
+    matchLabels:
+      app: bulletinboard-reviews-db
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: bulletinboard-reviews-db
+    spec:
+      volumes:
+        - name: bulletinboard-reviews-db-vol
+          persistentVolumeClaim:
+            claimName: bulletinboard-reviews-db-pvc
+      containers:
+        - name: postgres
+          image: postgres:12-alpine
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: bulletinboard-reviews-db-vol
+              mountPath: /var/lib/postgresql/data
+          env:
+            - name: POSTGRES_HOST_AUTH_METHOD
+              value: trust
+            - name: POSTGRES_USER
+              value: slonik
+            - name: POSTGRES_PASSWORD
+              value: topsekret
+            - name: POSTGRES_DB
+              value: reviews
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bulletinboard-reviews-db
+spec:
+  selector:
+    app: bulletinboard-reviews-db
+  ports:
+    - name: postgres
+      port: 5432
+      targetPort: 5432
+  type: ClusterIP

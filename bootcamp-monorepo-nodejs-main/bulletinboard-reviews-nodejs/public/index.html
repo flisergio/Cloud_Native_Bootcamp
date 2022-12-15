@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name='viewport' content='width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+  <meta name='HandheldFriendly' content='true'>
+  <title>Bulletin Board</title>
+  <script type='module'
+    src='https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.esm.js'></script>
+</head>
+
+<body>
+  <script type='module'>
+    import { html, render } from 'https://unpkg.com/htm@3.1.0/preact/standalone.module.js'
+    import App from './app.js'
+    import Client from './client.js'
+    render(html`<${App} client=${new Client()} />`, document.body)
+  </script>
+</body>
+
+</html>

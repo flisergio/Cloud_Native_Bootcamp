@@ -1,2 +1,3 @@
 # Cloud_Native_Bootcamp
-Node.js challenges fromSAP Cloud Native Bootcamp
+
+Challenges from SAP Cloud Native Bootcamp (React.js & SAPUI5 WebComponents + Node.js)

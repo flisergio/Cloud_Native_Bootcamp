@@ -1,0 +1,41 @@
+{
+  "name": "bulletinboard-reviews",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "prewatch": "npm run db:migrate:up",
+    "watch": "nodemon index.js",
+    "prestart": "npm run db:migrate:up",
+    "start": "node index.js",
+    "pretest": "NODE_ENV=test node lib/storage/migrate.js up",
+    "test": "NODE_ENV=test mocha",
+    "lint": "eslint lib test",
+    "db:start": "./start-db.sh",
+    "db:prune": "docker volume rm bb_reviews_local",
+    "db:migrate:up": "node lib/storage/migrate.js up",
+    "db:migrate:down": "node lib/storage/migrate.js down"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "dependencies": {
+    "db-migrate": "^0.11.13",
+    "db-migrate-pg": "^1.2.2",
+    "express": "^4.17.1",
+    "pg": "^8.7.1",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "eslint": "^8.15.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.2.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "mocha": "^10.0.0",
+    "nodemon": "^2.0.19",
+    "sinon": "^14.0.0",
+    "supertest": "^6.1.6"
+  }
+}

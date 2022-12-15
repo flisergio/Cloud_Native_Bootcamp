@@ -1,0 +1,17 @@
+{
+  // use new eslint api
+  "eslint.useESLintClass": true,
+  // comply to Standard code style (https://github.com/standard/standard)
+  "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
+  "javascript.format.insertSpaceAfterConstructor": true,
+  // set kubernetes env
+  "terminal.integrated.env.osx": {
+    "KUBECONFIG": "${workspaceFolder}/.k8s/kubeconfig.yml"
+  },
+  "terminal.integrated.env.windows": {
+    "KUBECONFIG": "${workspaceFolder}/.k8s/kubeconfig.yml"
+  },
+  "terminal.integrated.env.linux": {
+    "KUBECONFIG": "${workspaceFolder}/.k8s/kubeconfig.yml"
+  },
+}

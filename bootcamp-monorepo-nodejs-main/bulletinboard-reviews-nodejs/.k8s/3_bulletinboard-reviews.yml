@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bulletinboard-reviews
+spec:
+  selector:
+    matchLabels:
+      app: bulletinboard-reviews
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: bulletinboard-reviews
+    spec:
+      imagePullSecrets:
+        - name: docker-registry
+      containers:
+        - name: app
+          image: cc-ms-k8s-training.common.repositories.cloud.sap/bootcamp-reviews-i550531
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9090
+          env:
+            - name: PORT
+              value: "9090"
+            - name: POSTGRES_CONNECTION_STRING
+              value: postgres://slonik:topsekret@bulletinboard-reviews-db/reviews
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bulletinboard-reviews
+spec:
+  selector:
+    app: bulletinboard-reviews
+  ports:
+    - name: app
+      port: 9090
+      targetPort: 9090
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert.gardener.cloud/purpose: managed
+  name: bulletinboard-reviews
+spec:
+  rules:
+    - host: rws.ingress.sdk.i550531bc.shoot.canary.k8s-hana.ondemand.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: bulletinboard-reviews
+                port:
+                  number: 9090
+  tls:
+    - hosts:
+        - rws.ingress.sdk.i550531bc.shoot.canary.k8s-hana.ondemand.com
+      secretName: reviews-cert
+---
+apiVersion: cert.gardener.cloud/v1alpha1
+kind: Certificate
+metadata:
+  name: reviews-cert
+  namespace: default
+spec:
+  commonName: rws.ingress.sdk.i550531bc.shoot.canary.k8s-hana.ondemand.com

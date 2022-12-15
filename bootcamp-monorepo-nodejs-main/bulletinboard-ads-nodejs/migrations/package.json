@@ -1,0 +1,4 @@
+{
+  "description": "db-migrate does not support es modules yet",
+  "type": "commonjs"
+}
